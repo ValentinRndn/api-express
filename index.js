@@ -21,8 +21,8 @@ db.connect(err => {
 });
 
 // Créer une route Express pour effectuer une requête MySQL
-app.get('/utilisateurs', (req, res) => {
-  const query = 'SELECT * FROM `univers`';
+app.get('/univers', (req, res) => {
+  const query = 'SELECT * FROM univers';
   db.query(query, (err, result) => {
     if (err) {
       console.error('Erreur lors de l\'exécution de la requête : ' + err);
