@@ -84,7 +84,7 @@ class Univers {
 
     // Utilisez la méthode generateImage
     async generateUniversImage() {
-      generateImage("Génère-moi une image de" +this.nom);
+      generateImage("Génère-moi une image de l'univers de " +this.nom);
       console.log("Génération d'une image pour l'univers terminée !");
     }
   }

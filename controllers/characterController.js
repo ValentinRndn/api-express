@@ -3,13 +3,13 @@
 /////////////////////////////////////////////
 
 const db = require("../services/db");
-const Character = require('../back/class/personnages.class'); 
+const Character = require('../back/class/characters.class'); 
 
 /////////////////////Récupération de tous les personnages/////////////////////
 exports.getAllCharacters = (req, res) => {
   const universId = req.params.id; // Récupérez l'ID de l'univers à partir des paramètres de la requête
   const query =
-    "SELECT p.id, p.nom, p.id_images, p.id_messages FROM personnages p " +
+    "SELECT p.id, p.nom, p.id_images FROM personnages p " +
     "INNER JOIN univers up ON up.id = p.id_univers " +
     "WHERE p.id_univers = ?";
 
@@ -28,17 +28,17 @@ exports.getAllCharacters = (req, res) => {
 //Création d'un personnage dans un univers
 exports.createCharacter = async (req, res) => {
   const universId = req.params.id; // Récupérez l'ID de l'univers à partir des paramètres de la requête
-  const { nom, id_images, id_messages, id_univers } = req.body; // Récupérer les données du personnage à partir du corps de la requête
+  const { nom, id_images, id_univers } = req.body; // Récupérer les données du personnage à partir du corps de la requête
 
   // Effectuez la requête SQL pour insérer un nouveau personnage dans la table "personnages"
   const characterImg = Character.fromMap(req.body);
   await characterImg.generateCharacterImage();
    insertQuery =
-    "INSERT INTO personnages (nom, id_images, id_messages, id_univers) VALUES (?, ?, ?, ?)";
+    "INSERT INTO personnages (nom, id_images, id_univers) VALUES (?, ?, ?)";
 
     db.query(
     insertQuery,
-    [nom, id_images, id_messages, id_univers],
+    [nom, id_images, id_univers],
     (err, result) => {
       if (err) {
         console.error("Erreur lors de l'insertion du personnage : " + err);
@@ -59,10 +59,10 @@ exports.createCharacter = async (req, res) => {
 exports.editCharacter = (req, res) => {
   const universId = req.params.universId; // Récupérez l'ID de l'univers à partir des paramètres de la requête
   const personnageId = req.params.personnageId; // Récupérez l'ID du personnage à partir des paramètres de la requête
-  const { nom, id_images, id_messages } = req.body; // Récupérez les données mises à jour du personnage à partir du corps de la requête
+  const { nom, id_images } = req.body; // Récupérez les données mises à jour du personnage à partir du corps de la requête
 
   // Vérifiez que toutes les données nécessaires sont présentes
-  if (!nom || !id_images || !id_messages) {
+  if (!nom || !id_images) {
     res.status(400).json({ error: "Tous les champs sont obligatoires" });
     return;
   }
@@ -88,11 +88,11 @@ exports.editCharacter = (req, res) => {
 
     // Effectuez la requête SQL pour mettre à jour le personnage dans la base de données
     const updateQuery =
-      "UPDATE personnages SET nom = ?, id_images = ?, id_messages = ? WHERE id = ?";
+      "UPDATE personnages SET nom = ?, id_images = ? WHERE id = ?";
 
     db.query(
       updateQuery,
-      [nom, id_images, id_messages, personnageId],
+      [nom, id_images, personnageId],
       (err, result) => {
         if (err) {
           console.error("Erreur lors de la mise à jour du personnage : " + err);

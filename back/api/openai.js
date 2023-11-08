@@ -1,4 +1,3 @@
-// This code is for v4 of the openai package: npmjs.com/package/openai
 const open  = require('openai');
 const db = require("../../services/db");
 
