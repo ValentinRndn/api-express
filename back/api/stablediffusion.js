@@ -1,7 +1,8 @@
 const fs = require("fs");
 const dotenv = require("dotenv");
 dotenv.config({ path: ".env.local" });
-const db = require("../../services/db");
+const dbInstance = require("../../services/db").getInstance();
+
 
 let stableDiffusionUrl = "https://clipdrop-api.co/text-to-image/v1";
 
@@ -36,7 +37,7 @@ async function generateImage(prompt) {
     //INSERTION DE L'IMAGE EN BASE
     insertQuery = "INSERT INTO images (url) VALUES (?)";
 
-    db.query(insertQuery, [outputName], (err, result) => {
+    dbInstance.db.query(insertQuery, [outputName], (err, result) => {
       if (err) {
         console.error("Erreur lors de l'insertion de l'image : " + err);
         res.status(500).json({ error: "Erreur serveur" });

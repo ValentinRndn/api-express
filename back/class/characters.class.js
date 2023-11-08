@@ -1,10 +1,10 @@
 const { generateImage } = require("../api/stablediffusion");
 
 class Characters {
-  constructor(id, nom, id_image, id_univers) {
+  constructor(id, nom, id_images, id_univers) {
     this._id = id;
     this._nom = nom;
-    this._id_image = id_image;
+    this._id_images = id_images;
     this._id_univers = id_univers;
   }
 
@@ -17,8 +17,8 @@ class Characters {
     return this._nom;
   }
 
-  get id_image() {
-    return this._id_image;
+  get id_images() {
+    return this._id_images;
   }
 
   get id_univers() {
@@ -34,8 +34,8 @@ class Characters {
     this._nom = newNom;
   }
 
-  set id_image(newIdImage) {
-    this._id_image = newIdImage;
+  set id_images(newIdImages) {
+    this._id_images = newIdImages;
   }
 
   set id_univers(newIdUnivers) {
@@ -47,17 +47,17 @@ class Characters {
     return {
       id: this._id,
       nom: this._nom,
-      id_image: this._id_image,
+      id_images: this._id_images,
       id_univers: this._id_univers,
     };
   }
 
   //FromMap
   static fromMap(map) {
-    return new Personnages(
+    return new Characters(
       map.id,
       map.nom,
-      map.id_image,
+      map.id_images,
       map.id_univers
     );
   }

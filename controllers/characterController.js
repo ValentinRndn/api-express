@@ -2,7 +2,7 @@
 ////////Gestion des Personnages//////////////
 /////////////////////////////////////////////
 
-const db = require("../services/db");
+const dbInstance = require("../services/db").getInstance();
 const Character = require('../back/class/characters.class'); 
 
 /////////////////////Récupération de tous les personnages/////////////////////
@@ -13,7 +13,7 @@ exports.getAllCharacters = (req, res) => {
     "INNER JOIN univers up ON up.id = p.id_univers " +
     "WHERE p.id_univers = ?";
 
-  db.query(query, [universId], (err, result) => {
+    dbInstance.db.query(query, [universId], (err, result) => {
     if (err) {
       console.error("Erreur lors de l'exécution de la requête : " + err);
       res.status(500).json({ error: "Erreur serveur" });
@@ -36,7 +36,7 @@ exports.createCharacter = async (req, res) => {
    insertQuery =
     "INSERT INTO personnages (nom, id_images, id_univers) VALUES (?, ?, ?)";
 
-    db.query(
+    dbInstance.db.query(
     insertQuery,
     [nom, id_images, id_univers],
     (err, result) => {
@@ -71,7 +71,7 @@ exports.editCharacter = (req, res) => {
   const checkOwnershipQuery =
     "SELECT id FROM personnages WHERE id = ? AND id_univers = ?";
 
-  db.query(checkOwnershipQuery, [personnageId, universId], (err, result) => {
+    dbInstance.db.query(checkOwnershipQuery, [personnageId, universId], (err, result) => {
     if (err) {
       console.error(
         "Erreur lors de la vérification de l'appartenance du personnage à l'univers : " +
@@ -90,7 +90,7 @@ exports.editCharacter = (req, res) => {
     const updateQuery =
       "UPDATE personnages SET nom = ?, id_images = ? WHERE id = ?";
 
-    db.query(
+      dbInstance.db.query(
       updateQuery,
       [nom, id_images, personnageId],
       (err, result) => {
@@ -116,7 +116,7 @@ exports.deleteCharacter = (req, res) => {
   const checkOwnershipQuery =
     "SELECT id FROM personnages WHERE id = ? AND id_univers = ?";
 
-  db.query(checkOwnershipQuery, [personnageId, universId], (err, result) => {
+    dbInstance.db.query(checkOwnershipQuery, [personnageId, universId], (err, result) => {
     if (err) {
       console.error(
         "Erreur lors de la vérification de l'appartenance du personnage à l'univers : " +
@@ -134,7 +134,7 @@ exports.deleteCharacter = (req, res) => {
     // Effectuez la requête SQL pour supprimer le personnage de la base de données
     const deleteQuery = "DELETE FROM personnages WHERE id = ?";
 
-    db.query(deleteQuery, [personnageId], (err, result) => {
+    dbInstance.db.query(deleteQuery, [personnageId], (err, result) => {
       if (err) {
         console.error("Erreur lors de la suppression du personnage : " + err);
         res.status(500).json({ error: "Erreur serveur" });

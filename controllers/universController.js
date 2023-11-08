@@ -2,14 +2,14 @@
 ////////////Gestion des univers//////////////
 /////////////////////////////////////////////
 
-const db = require("../services/db");
+const dbInstance = require("../services/db").getInstance();
 const Univers = require("../back/class/univers.class");
 
 
 /////Récupération de tous les univers/////
 exports.getAllUniverse = (req, res) => {
   const query = "SELECT * FROM univers";
-  db.query(query, (err, result) => {
+  dbInstance.db.query(query, (err, result) => {
     if (err) {
       console.error("Erreur lors de l'exécution de la requête : " + err);
       res.status(500).send("Erreur serveur");
@@ -21,18 +21,14 @@ exports.getAllUniverse = (req, res) => {
 
 /////Création d'un univers/////
 exports.createNewUnivers = async (req, res) => {
-  //Création d'un univers
-  // Route POST pour créer un nouvel univers
-  // Récupérez les données de l'univers à partir du corps de la requête (assurez-vous d'avoir installé le middleware body-parser)
   const univers = Univers.fromMap(req.body);
-  // Effectuez la requête SQL pour insérer un nouvel univers dans la base de données
 
   await univers.generateDescription();
   await univers.generateUniversImage();
   console.log(univers.description);
   const query =
     "INSERT INTO univers (description, id_utilisateurs, nom, id_images, nb_perso) VALUES (?, ?, ?, ?, ?)";
-  db.query(
+    dbInstance.db.query(
     query,
     [
       univers.description.trim(),
@@ -51,7 +47,7 @@ exports.createNewUnivers = async (req, res) => {
       const universId = result.insertId; // L'ID de l'univers nouvellement créé
 
       // Vous pouvez renvoyer l'univers nouvellement créé en réponse
-      db.query(
+      dbInstance.db.query(
         "SELECT * FROM univers WHERE id = ?",
         [universId],
         (err, rows) => {
@@ -87,7 +83,7 @@ exports.getAnUnivers = (req, res) => {
   const universId = req.params.id;
   const query = "SELECT * FROM univers WHERE id = ?";
 
-  db.query(query, [universId], (err, result) => {
+  dbInstance.db.query(query, [universId], (err, result) => {
     if (err) {
       console.error("Erreur lors de l'exécution de la requête : " + err);
       res.status(500).send("Erreur serveur");
@@ -118,7 +114,7 @@ exports.editAnUnivers = (req, res) => {
   // Effectuez la requête SQL pour mettre à jour l'univers dans la base de données
   const query =
     "UPDATE univers SET description = ?, id_utilisateurs = ?, nom = ?, id_personnages = ?, id_images = ?, nb_perso = ? WHERE id = ?";
-  db.query(
+    dbInstance.db.query(
     query,
     [description, id_utilisateurs, nom, id_images, nb_perso, universId],
     (err, result) => {
@@ -147,7 +143,7 @@ exports.deleteAnUnivers = (req, res) => {
   const universId = req.params.id; // Récupérez l'ID de l'univers à partir des paramètres de la requête
   const query = "DELETE FROM univers WHERE id = ?";
 
-  db.query(query, [universId], (err, result) => {
+  dbInstance.db.query(query, [universId], (err, result) => {
     if (err) {
       console.error("Erreur lors de la suppression de l'univers : " + err);
       res.status(500).json({ error: "Erreur serveur" });

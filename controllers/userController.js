@@ -2,7 +2,8 @@
 ////////////Gestion des users//////////////
 /////////////////////////////////////////////
 
-const conn = require('../services/db')
+const dbInstance = require("../services/db").getInstance();
+
 
 const jwt = require('jsonwebtoken');
 
@@ -27,7 +28,7 @@ exports.createUser = (req, res) => {
 
   const values = [user.pseudo, user.mdp];
 
-  conn.query(sql, values, (err, result) => {
+  dbInstance.db.query(sql, values, (err, result) => {
 
     if (err) {
 
@@ -88,7 +89,7 @@ exports.updateUser = (req, res) => {
 
  
 
-  conn.query(sql, values, (err) => {
+  dbInstance.db.query(sql, values, (err) => {
 
     if (err) {
 
@@ -116,7 +117,7 @@ exports.authentification = (req, res) => {
 console.log(req.body);
   const values = [user.pseudo, user.mdp];
 
-  conn.query(sql, values, (err, result) => {
+  dbInstance.db.query(sql, values, (err, result) => {
 
     if (err) {
 
@@ -148,7 +149,7 @@ exports.getUserById = (req, res) => {
 
   const sql = "SELECT * FROM utilisateurs WHERE id = ?";
 
-  conn.query(sql, [userID], (err, result) => {
+  dbInstance.db.query(sql, [userID], (err, result) => {
 
     if (err) {
 
@@ -172,7 +173,7 @@ exports.getUserById = (req, res) => {
 
 exports.getAllUsers = (req, res) => {
 
-  conn.query("SELECT * FROM utilisateurs", (err, rows,) => {
+  dbInstance.db.query("SELECT * FROM utilisateurs", (err, rows,) => {
 
     if (err || rows.length === 0) {
 

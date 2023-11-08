@@ -64,6 +64,10 @@ class Messages {
   static fromMap(map) {
     return new Messages(map.id, map.isHumain, map.content, map.id_personnage, map.date_dernier_message);
   }
+
+
+
+  
 }
 
 module.exports = Messages;

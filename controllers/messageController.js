@@ -2,7 +2,7 @@
 ////////Gestion des Messages ////////////////
 /////////////////////////////////////////////
 
-const db = require("../services/db");
+const dbInstance = require("../services/db").getInstance();
 
 
 /////Récupération de l'historique des messages d'une conversation/////
@@ -13,7 +13,7 @@ exports.getAllMessage = (req, res) => {
   const query =
     "SELECT id, isHumain, content, id_personnage, date_dernier_message FROM messages WHERE id = ?";
 
-  db.query(query, [conversationId], (err, result) => {
+    dbInstance.db.query(query, [conversationId], (err, result) => {
     if (err) {
       console.error("Erreur lors de l'exécution de la requête : " + err);
       res.status(500).json({ error: "Erreur serveur" });
@@ -38,7 +38,7 @@ exports.sendMessage = (req, res) => {
   // Effectuez la requête SQL pour insérer le nouveau message dans la table "messages"
   const insertQuery =
     "INSERT INTO messages (id, isHumain, content, id_personnage, date_dernier_message) VALUES (?, ?, ?, ?, ?)";
-  db.query(insertQuery, [conversationId, isHumain, content], (err, result) => {
+    dbInstance.db.query(insertQuery, [conversationId, isHumain, content], (err, result) => {
     if (err) {
       console.error("Erreur lors de l'insertion du message : " + err);
       res.status(500).json({ error: "Erreur serveur" });
@@ -65,7 +65,7 @@ exports.regenerateMessage = (req, res) => {
   // Effectuez la requête SQL pour mettre à jour le dernier message de la conversation
   const updateQuery =
     "UPDATE messages SET content = ? WHERE id_personnage = ? ORDER BY id DESC LIMIT 1";
-  db.query(updateQuery, [nouveauContenu, conversationId], (err, result) => {
+    dbInstance.db.query(updateQuery, [nouveauContenu, conversationId], (err, result) => {
     if (err) {
       console.error(
         "Erreur lors de la mise à jour du dernier message : " + err

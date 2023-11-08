@@ -1,5 +1,5 @@
 const open  = require('openai');
-const db = require("../../services/db");
+// const db = require("../../services/db");
 
 const openai = new open({
   apiKey: process.env.OPENAI_API_KEY,
