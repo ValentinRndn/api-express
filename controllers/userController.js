@@ -24,9 +24,9 @@ exports.createUser = (req, res) => {
 
   let user = User.fromMap(req.body);  
 
-  const sql = "INSERT INTO utilisateurs (pseudo, mdp) VALUES (?, ?)";
+  const sql = "INSERT INTO utilisateurs (nom, prenom, pseudo, mdp) VALUES (?, ?, ?, ?)";
 
-  const values = [user.pseudo, user.mdp];
+  const values = [user.nom, user.prenom, user.pseudo, user.mdp];
 
   dbInstance.db.query(sql, values, (err, result) => {
 
@@ -65,7 +65,20 @@ exports.updateUser = (req, res) => {
   const values = [];
 
  
+  if (user.prenom) {
 
+    columns.push("prenom = ?");
+
+    values.push(user.prenom);
+
+  }
+  if (user.nom) {
+
+    columns.push("nom = ?");
+
+    values.push(user.nom);
+
+  }
   if (user.pseudo) {
 
     columns.push("pseudo = ?");

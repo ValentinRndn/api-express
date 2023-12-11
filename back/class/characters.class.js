@@ -1,10 +1,11 @@
 const { generateImage } = require("../api/stablediffusion");
 
 class Characters {
-  constructor(id, nom, id_images, id_univers) {
+  constructor(id, nom, id_images, id_messages, id_univers) {
     this._id = id;
     this._nom = nom;
     this._id_images = id_images;
+    this._id_messages = id_messages;
     this._id_univers = id_univers;
   }
 
@@ -19,6 +20,10 @@ class Characters {
 
   get id_images() {
     return this._id_images;
+  }
+
+  get id_messages() {
+    return this._id_messages;
   }
 
   get id_univers() {
@@ -38,6 +43,10 @@ class Characters {
     this._id_images = newIdImages;
   }
 
+  set id_messages(newIdMessages) {
+    this._id_messages = newIdMessages;
+  }
+
   set id_univers(newIdUnivers) {
     this._id_univers = newIdUnivers;
   }
@@ -48,6 +57,7 @@ class Characters {
       id: this._id,
       nom: this._nom,
       id_images: this._id_images,
+      id_messages: this._id_messages,
       id_univers: this._id_univers,
     };
   }
@@ -58,6 +68,7 @@ class Characters {
       map.id,
       map.nom,
       map.id_images,
+      map.id_messages,
       map.id_univers
     );
   }

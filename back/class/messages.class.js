@@ -1,8 +1,8 @@
 class Messages {
-  constructor(id, isHumain, content, id_personnage, date_dernier_message) {
+  constructor(id, isHumain, contenu, id_personnage, date_dernier_message) {
     this._id = id;
     this._isHumain = isHumain;
-    this.content = content;
+    this.contenu = contenu;
     this.id_personnage = id_personnage;
     this._date_dernier_message = date_dernier_message;
   }
@@ -16,8 +16,8 @@ class Messages {
     return this._isHumain;
   }
   
-  get content() {
-    return this._content;
+  get contenu() {
+    return this._contenu;
   }
 
   get id_personnage() {
@@ -37,8 +37,8 @@ class Messages {
     this._isHumain = newIsHumain;
   }
 
-  set content(newContent) {
-    this._content = newContent;
+  set contenu(newContenu) {
+    this._contenu = newContenu;
   }
 
   set id_personnage(newIdPersonnage) {
@@ -54,7 +54,7 @@ class Messages {
     return {
       id: this._id,
       isHumain: this._isHumain,
-      content: this._content,
+      contenu: this._contenu,
       id_personnage: this.id_personnage,
       date_dernier_message: this.date_dernier_message
     };
@@ -62,7 +62,7 @@ class Messages {
 
   //FromMap
   static fromMap(map) {
-    return new Messages(map.id, map.isHumain, map.content, map.id_personnage, map.date_dernier_message);
+    return new Messages(map.id, map.isHumain, map.contenu, map.id_personnage, map.date_dernier_message);
   }
 
 

@@ -3,9 +3,9 @@ const express = require("express");
 const router = express.Router();
 const characterController = require('../controllers/characterController');
 
-router.get("/universes/:id/characters", characterController.getAllCharacters);
-router.post("/characters", characterController.createCharacter);
-router.put("/character/:id/", characterController.editCharacter);
-router.delete("/universes/:id/characters", characterController.deleteCharacter);
+router.get("/:id", characterController.getAllCharacters);
+router.post("/createCharacter", characterController.createCharacter);
+router.put("update/:id", characterController.updateCharacter);
+router.delete("delete/:id", characterController.deleteCharacter);
 
 module.exports = router;

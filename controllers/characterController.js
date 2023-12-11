@@ -7,20 +7,21 @@ const Character = require('../back/class/characters.class');
 
 /////////////////////Récupération de tous les personnages/////////////////////
 exports.getAllCharacters = (req, res) => {
-  const universId = req.params.id; // Récupérez l'ID de l'univers à partir des paramètres de la requête
-  const query =
-    "SELECT p.id, p.nom, p.id_images FROM personnages p " +
-    "INNER JOIN univers up ON up.id = p.id_univers " +
-    "WHERE p.id_univers = ?";
+  const id = req.originalUrl.split("/")[2];
+  const sql = "SELECT * FROM personnages WHERE id_univers = ?";
+  const values = [id];
 
-    dbInstance.db.query(query, [universId], (err, result) => {
+  dbInstance.db.query(sql, values, (err, rows, fields) => {
     if (err) {
-      console.error("Erreur lors de l'exécution de la requête : " + err);
-      res.status(500).json({ error: "Erreur serveur" });
-      return;
+      console.error("Erreur lors de la récupération des personnages :", err);
+      res
+        .status(500)
+        .json({ error: "Erreur lors de la récupération des personnages" });
+      console.log(sql, values);
+    } else {
+      res.status(200).json(rows);
+      console.log(sql, values);
     }
-
-    res.json(result);
   });
 };
 
@@ -55,93 +56,40 @@ exports.createCharacter = async (req, res) => {
 
 
 /////////////////////Modification d'un personnage dans un univers/////////////////////
-//Modification d'un personnage dans un univers
-exports.editCharacter = (req, res) => {
-  const universId = req.params.universId; // Récupérez l'ID de l'univers à partir des paramètres de la requête
-  const personnageId = req.params.personnageId; // Récupérez l'ID du personnage à partir des paramètres de la requête
-  const { nom, id_images } = req.body; // Récupérez les données mises à jour du personnage à partir du corps de la requête
-
-  // Vérifiez que toutes les données nécessaires sont présentes
-  if (!nom || !id_images) {
-    res.status(400).json({ error: "Tous les champs sont obligatoires" });
-    return;
-  }
-
-  // Vérifiez que le personnage appartient bien à l'univers spécifié
-  const checkOwnershipQuery =
-    "SELECT id FROM personnages WHERE id = ? AND id_univers = ?";
-
-    dbInstance.db.query(checkOwnershipQuery, [personnageId, universId], (err, result) => {
+exports.updateCharacter = (req, res) => {
+  let personnage = Character.fromMap(req.body); //from map
+  const idCharacter = req.params.idCharacter; //req.params.id;
+  let sql =
+    "UPDATE personnages SET nom = ?, id_images = ?, id_univers = ? WHERE id = ?";
+  const values = [
+    personnage.nom,
+    personnage.id_images,
+    personnage.id_univers,
+    idCharacter,
+  ];
+  dbInstance.db.query(sql, values, (err, result) => {
     if (err) {
-      console.error(
-        "Erreur lors de la vérification de l'appartenance du personnage à l'univers : " +
-          err
-      );
-      res.status(500).json({ error: "Erreur serveur" });
-      return;
+      console.error("Erreur lors de l'insertion :", err);
+      res.status(500).json({ error: "Erreur lors de l'insertion" });
+    } else {
+      console.log("Enregistrement inséré avec succès !");
+      res.status(200).json({ message: "Enregistrement inséré avec succès" });
     }
-
-    if (result.length === 0) {
-      res.status(404).json({ error: "Personnage non trouvé dans cet univers" });
-      return;
-    }
-
-    // Effectuez la requête SQL pour mettre à jour le personnage dans la base de données
-    const updateQuery =
-      "UPDATE personnages SET nom = ?, id_images = ? WHERE id = ?";
-
-      dbInstance.db.query(
-      updateQuery,
-      [nom, id_images, personnageId],
-      (err, result) => {
-        if (err) {
-          console.error("Erreur lors de la mise à jour du personnage : " + err);
-          res.status(500).json({ error: "Erreur serveur" });
-          return;
-        }
-
-        res.json({ message: "Personnage mis à jour avec succès" });
-      }
-    );
   });
 };
 
-
-/////////////////////Delete d'un personnage dans un univers/////////////////////
 exports.deleteCharacter = (req, res) => {
-  const universId = req.params.universId; // Récupérez l'ID de l'univers à partir des paramètres de la requête
-  const personnageId = req.params.personnageId; // Récupérez l'ID du personnage à partir des paramètres de la requête
-
-  // Vérifiez que le personnage appartient bien à l'univers spécifié
-  const checkOwnershipQuery =
-    "SELECT id FROM personnages WHERE id = ? AND id_univers = ?";
-
-    dbInstance.db.query(checkOwnershipQuery, [personnageId, universId], (err, result) => {
+  const personnagesData = req.body;
+  const id = req.params.idCharacter;
+  let sql = "DELETE FROM personnages WHERE id = ?";
+  const values = [id];
+  dbInstance.db.query(sql, values, (err, result) => {
     if (err) {
-      console.error(
-        "Erreur lors de la vérification de l'appartenance du personnage à l'univers : " +
-          err
-      );
-      res.status(500).json({ error: "Erreur serveur" });
-      return;
+      console.error("Erreur lors de la suppression :", err);
+      res.status(500).json({ error: "Erreur lors de la suppression" });
+    } else {
+      console.log("Enregistrement supprimé avec succès !");
+      res.status(200).json({ message: "Enregistrement supprimé avec succès" });
     }
-
-    if (result.length === 0) {
-      res.status(404).json({ error: "Personnage non trouvé dans cet univers" });
-      return;
-    }
-
-    // Effectuez la requête SQL pour supprimer le personnage de la base de données
-    const deleteQuery = "DELETE FROM personnages WHERE id = ?";
-
-    dbInstance.db.query(deleteQuery, [personnageId], (err, result) => {
-      if (err) {
-        console.error("Erreur lors de la suppression du personnage : " + err);
-        res.status(500).json({ error: "Erreur serveur" });
-        return;
-      }
-
-      res.json({ message: "Personnage supprimé avec succès" });
-    });
   });
 };

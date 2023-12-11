@@ -1,84 +1,97 @@
-/////////////////////////////////////////////
-////////Gestion des Messages ////////////////
-/////////////////////////////////////////////
-
+const mysql = require("mysql2");
+const bodyParser = require("body-parser");
+const port = 3000;
+// const router= express.Router();
 const dbInstance = require("../services/db").getInstance();
 
+const Message = require("../back/class/messages.class");
 
-/////Récupération de l'historique des messages d'une conversation/////
-exports.getAllMessage = (req, res) => {
-  const conversationId = req.params.conversationId; // Récupérez l'ID de la conversation à partir des paramètres de la requête
+const env = require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const Chatopenai = require("../back/api/openai");
 
-  // Récupérez l'historique des messages de la conversation
-  const query =
-    "SELECT id, isHumain, content, id_personnage, date_dernier_message FROM messages WHERE id = ?";
+//////////////////////////////////////////////
+//////////////MESSAGES////////////////////////
+//////////////////////////////////////////////
 
-    dbInstance.db.query(query, [conversationId], (err, result) => {
+//récupération message user
+exports.getMessage = (req, res) => {
+  const idMessage = req.originalUrl.split("/")[2];
+  const sql = `SELECT m.contenu FROM messages m JOIN utilisateurs u on m.id_utilisateur=u.id WHERE u.id = ?;`;
+  const values = [idMessage];
+
+
+  dbInstance.db.query(sql, values, (err, rows, fields) => {
     if (err) {
-      console.error("Erreur lors de l'exécution de la requête : " + err);
-      res.status(500).json({ error: "Erreur serveur" });
-      return;
+      console.error("Erreur lors de la récupération des messages :", err);
+      res
+        .status(500)
+        .json({ error: "Erreur lors de la récupération des messages" });
     }
-
-    res.json(result);
+    res.status(200).json(rows);
   });
 };
 
-/////Envoie d'un nouveau message / réponse à un message d'une conversation/////
-exports.sendMessage = (req, res) => {
-  const conversationId = req.params.conversationId; // Récupérez l'ID de la conversation à partir des paramètres de la requête
-  const { isHumain, content } = req.body; // Récupérez les données du message à partir du corps de la requête
+exports.sendMessage = async (req, res) => {
+  let message = Message.fromMap(req.body);
+  const secretkey = process.env.TOKEN_KEY ;
+  var tokenBearer = req.headers.authorization;
+  var token = tokenBearer.split(" ")[1]; // on récupère le token sans le bearer
+  var decoded = jwt.verify(token, secretkey); // on décode le token
+  var idUser = decoded.id;
+  var isHumain = true;
 
-  // Vérifiez que toutes les données nécessaires sont présentes
-  if (isHumain === undefined || content === undefined) {
-    res.status(400).json({ error: "Tous les champs sont obligatoires" });
-    return;
+  const sql =
+    "INSERT INTO messages (isHumain, date_dernier_message, contenu, id_utilisateur, id_personnage) VALUES (?, NOW(), ?, ?, ?)";
+  const values = [isHumain, message.contenu, idUser, message._id_personnage];
+
+  try {
+    // First database insert
+    const firstInsertResult = await new Promise((resolve, reject) => {
+      dbInstance.db.query(sql, values, (err, result) => {
+        if (err) {
+          console.error("Erreur lors de l'insertion :", err);
+          reject(err);
+        } else {
+          console.log("Enregistrement inséré avec succès !");
+          resolve(result);
+        }
+      });
+    });
+
+    // Generate response and perform the second database insert
+    let idPersonnage = message._id_personnage;
+    var reponse = await Chatopenai.generateResponseForMessage(
+      idUser,
+      idPersonnage
+    );
+    console.log(reponse);
+
+    const sql2 =
+      "INSERT INTO messages (isHumain, date_dernier_message, contenu, id_utilisateur, id_personnage) VALUES (?, NOW(), ?, ?, ?)";
+    const valuesMessage = [
+      reponse.isHumain,
+      reponse.contenu,
+      reponse.id_utilisateur,
+      reponse._id_personnage,
+    ];
+
+    const secondInsertResult = await new Promise((resolve, reject) => {
+      dbInstance.db.query(sql2, valuesMessage, (err, result) => {
+        if (err) {
+          console.error("Erreur lors de l'insertion :", err);
+          reject(err);
+        } else {
+          console.log("Enregistrement inséré avec succès !");
+          resolve(result);
+        }
+      });
+    });
+
+    res.status(201).json({ message: "Enregistrement inséré avec succès" });
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de l'insertion" });
   }
-
-  // Effectuez la requête SQL pour insérer le nouveau message dans la table "messages"
-  const insertQuery =
-    "INSERT INTO messages (id, isHumain, content, id_personnage, date_dernier_message) VALUES (?, ?, ?, ?, ?)";
-    dbInstance.db.query(insertQuery, [conversationId, isHumain, content], (err, result) => {
-    if (err) {
-      console.error("Erreur lors de l'insertion du message : " + err);
-      res.status(500).json({ error: "Erreur serveur" });
-      return;
-    }
-
-    res.json({ message: "Message envoyé avec succès" });
-  });
 };
 
-
-
-/////Régénération d'un message/////
-exports.regenerateMessage = (req, res) => {
-  const conversationId = req.params.conversationId; // Récupérez l'ID de la conversation à partir des paramètres de la requête
-  const { nouveauContenu } = req.body; // Récupérez le nouveau contenu du dernier message à partir du corps de la requête
-
-  // Vérifiez que le contenu du nouveau message est présent
-  if (nouveauContenu === undefined) {
-    res.status(400).json({ error: "Le contenu du message est obligatoire" });
-    return;
-  }
-
-  // Effectuez la requête SQL pour mettre à jour le dernier message de la conversation
-  const updateQuery =
-    "UPDATE messages SET content = ? WHERE id_personnage = ? ORDER BY id DESC LIMIT 1";
-    dbInstance.db.query(updateQuery, [nouveauContenu, conversationId], (err, result) => {
-    if (err) {
-      console.error(
-        "Erreur lors de la mise à jour du dernier message : " + err
-      );
-      res.status(500).json({ error: "Erreur serveur" });
-      return;
-    }
-
-    if (result.affectedRows === 0) {
-      res.status(404).json({ error: "Conversation non trouvée" });
-      return;
-    }
-
-    res.json({ message: "Dernier message régénéré avec succès" });
-  });
-};
+module.exports = exports;
