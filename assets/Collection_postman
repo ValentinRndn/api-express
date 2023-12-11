@@ -1,0 +1,707 @@
+{
+	"info": {
+		"_postman_id": "aa198c72-803c-4e86-8bc5-80a16b575779",
+		"name": "API EXPRESS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29804875"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Création d'un token",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjk4MzEwMzc3LCJleHAiOjE2OTgzOTY3Nzd9.oK40XH4ZW8nE84Z9T_-2LRruzXMrSFpnUtqoiUEd3Co",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"pseudo\": \"EJ\", \r\n    \"mdp\": \"azerty\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/user/auth",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Création d'un user",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nom\": \"Vall\",\r\n    \"prenom\": \"Valennnn\",\r\n    \"pseudo\": \"Azr\",\r\n    \"mdp\": \"qwerty\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/createUser/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"createUser",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update d'un user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nom\": \"Vall\",\r\n    \"prenom\": \"Vale\",\r\n    \"pseudo\": \"Azr\",\r\n    \"mdp\": \"qwerty\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/updateUser/17",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"updateUser",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Récupération d'un user",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"nom\": \"Plouet\",\r\n    \"prenom\": \"Melina\",\r\n    \"pseudo\": \"PM\",\r\n    \"mdp\": \"cba\",\r\n    \"id_message\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/getUserById/17",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"getUserById",
+								"17"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Récupération de tous les users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 5,\r\n    \"nom\": \"Plouet\",\r\n    \"prenom\": \"Melina\",\r\n    \"pseudo\": \"PM\",\r\n    \"mdp\": \"cba\",\r\n    \"id_message\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/getAllUsers",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"getAllUsers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Univers",
+			"item": [
+				{
+					"name": "Création d'un univers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id_utilisateurs\": 4,\r\n        \"nom\": \"Le monde de narnia\",\r\n        \"id_personnages\": 4,\r\n        \"id_images\": 5,\r\n        \"nb_perso\": 3\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/univers/createUnivers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"univers",
+								"createUnivers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collections de tous les univers Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjk4MzIyNjUxLCJleHAiOjE2OTg0MDkwNTF9.vrh-BFMP_yuNmhhjwEjA4SSo39-edmB4aXlIaprke2M",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjk4MzIyNjUxLCJleHAiOjE2OTg0MDkwNTF9.vrh-BFMP_yuNmhhjwEjA4SSo39-edmB4aXlIaprke2M",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/univers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"univers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collection d'un univers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNzAyMzE2MTc3LCJleHAiOjE3MDI0MDI1Nzd9.i-pcbBbOWhbELPldEnsuThkjRpTaPrYjNhFyUfiKD88",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/univers/14",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"univers",
+								"14"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update d'un univers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"ogreeesse qui vit dans le marais\",\r\n    \"id_utilisateurs\": 1,\r\n    \"nom\": \"Shrekkk\",\r\n    \"id_images\": 2,\r\n    \"nb_perso\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/univers/update/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"univers",
+								"update",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Supression d'un univers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/univers/delete/31",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"univers",
+								"delete",
+								"31"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Personnages",
+			"item": [
+				{
+					"name": "Récupération de tous les persos d'un univers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/character/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"character",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Création d'un personnage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n        \"nom\": \"Miniiie\",\r\n        \"id_images\": 3,\r\n        \"id_univers\": 1\r\n    }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/character/createCharacter",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"character",
+								"createCharacter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modification d'un personnage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n    {\r\n        \"nom\": \"Minoi\",\r\n        \"id_images\": 3,\r\n        \"id_messages\": 0,\r\n        \"id_univers\": 1\r\n    }\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/character/update/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"character",
+								"update",
+								"7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Suppression d'un personnage",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/character/delete/7",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"character",
+								"delete",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messages",
+			"item": [
+				{
+					"name": "Récupération de l'historique des messages dans une conversation",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/message/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"message",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Renvoie d'un nouveau message dans un conv et de sa réponse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "    {\r\n        \"id\": 5,\r\n        \"isHumain\": 0,\r\n        \"contenu\": \"Comment vas-tu aujourd'hui ?\",\r\n        \"id_utilisateur\": 5,\r\n        \"date_dernier_message\": \"Lorem Ipsum\",\r\n        \"id_personnage\": 7\r\n    }   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/message/5/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"message",
+								"5",
+								"add"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
