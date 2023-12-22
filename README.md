@@ -1,4 +1,4 @@
-**--Fil Rouge--**
+**Fil Rouge**
 
 REST API codé avec la librairie js Express.
 Cette application permet de créer une discussion avec un personnage fictif dans un univers donné.
@@ -13,10 +13,10 @@ MySql2
 --Installation--
 
 - Clôner le dépôt 
-git clone https://github.com/ValentinRndn/api-express.git
+```git clone https://github.com/ValentinRndn/api-express.git```
 
 -Installer toutes les dépendances nécessaires au projet
-npm i
+```npm i```
 
 -Mise en place de la base de données
 Créer une base de données MySQL appelé "fil_rouge"
