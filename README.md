@@ -36,7 +36,7 @@ Importer le fichier fil_rouge.sql (assets/fil_rouge.sql)
 ## Utilisation
 1. Ouvrir l'application Postman et importer la collection (assets/collection_postman)
 2. Créer un utlisateur
-3. Créer un token et inscrivant le pseudo & le mot de passe
+3. Créer un token en inscrivant le pseudo & le mot de passe
 4. Renseigner le token généré pour chacune des requêtes suivantes
 5. Créer un univers
 6. Créer un univers
