@@ -12,17 +12,17 @@ MySql2
 
 ## Installation
 
-- Clôner le dépôt 
+##### Clôner le dépôt 
 ```git clone https://github.com/ValentinRndn/api-express.git```
 
--Installer toutes les dépendances nécessaires au projet
+##### Installer toutes les dépendances nécessaires au projet
 ```npm i```
 
--Mise en place de la base de données
+##### Mise en place de la base de données
 Créer une base de données MySQL appelé "fil_rouge"
 Importer le fichier fil_rouge.sql (assets/fil_rouge.sql)
 
--Mise en place de l'environnement
+##### Mise en place de l'environnement
 
 
 1. Créer le fichier .env
