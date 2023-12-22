@@ -6,9 +6,9 @@ Le tout géré avec l'API d'Openai et de StableDiffusion.
 
 ## Environnement
 
-NodeJs dans sa version ```v18.17.1```
-NPM dans sa version ```10.1.0```
-MySql2
+* NodeJs dans sa version ```v18.17.1```
+* NPM dans sa version ```10.1.0```
+* MySql2
 
 ## Installation
 
