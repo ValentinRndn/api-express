@@ -58,7 +58,7 @@ exports.createCharacter = async (req, res) => {
 /////////////////////Modification d'un personnage dans un univers/////////////////////
 exports.updateCharacter = (req, res) => {
   let personnage = Character.fromMap(req.body); //from map
-  const idCharacter = req.params.idCharacter; //req.params.id;
+  const idCharacter = req.params.id; //req.params.id;
   let sql =
     "UPDATE personnages SET nom = ?, id_images = ?, id_univers = ? WHERE id = ?";
   const values = [
@@ -78,11 +78,12 @@ exports.updateCharacter = (req, res) => {
   });
 };
 
+/////////////////////Suppression d'un personnage dans un univers/////////////////////
 exports.deleteCharacter = (req, res) => {
-  const personnagesData = req.body;
-  const id = req.params.idCharacter;
+  const id = req.params.id;
   let sql = "DELETE FROM personnages WHERE id = ?";
   const values = [id];
+
   dbInstance.db.query(sql, values, (err, result) => {
     if (err) {
       console.error("Erreur lors de la suppression :", err);

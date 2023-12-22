@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "aa198c72-803c-4e86-8bc5-80a16b575779",
+		"_postman_id": "1f5c87c2-3787-4b16-afc4-b48a7589e89e",
 		"name": "API EXPRESS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29804875"
@@ -542,7 +542,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzMjcwNzYzLCJleHAiOjE3MDMzNTcxNjN9.xanD3Hfu0WNgitFImwRigo4NDJkfC52M89iM6Yg-BpM",
 									"type": "string"
 								}
 							]
@@ -551,7 +551,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "\r\n    {\r\n        \"nom\": \"Minoi\",\r\n        \"id_images\": 3,\r\n        \"id_messages\": 0,\r\n        \"id_univers\": 1\r\n    }\r\n",
+							"raw": "\r\n    {\r\n        \"nom\": \"Minoi\",\r\n        \"id_images\": 3,\r\n        \"id_univers\": 1\r\n    }\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -559,7 +559,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/character/update/7",
+							"raw": "http://localhost:3000/character/update/8",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -568,7 +568,7 @@
 							"path": [
 								"character",
 								"update",
-								"7"
+								"8"
 							]
 						}
 					},
@@ -582,7 +582,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAyMzE5MDc3LCJleHAiOjE3MDI0MDU0Nzd9.M3m75xGvggF7S2L7iChWPbkuWa9FNnfA9IbpdzLUnnA",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiaWF0IjoxNzAzMjcwNzYzLCJleHAiOjE3MDMzNTcxNjN9.xanD3Hfu0WNgitFImwRigo4NDJkfC52M89iM6Yg-BpM",
 									"type": "string"
 								}
 							]
